@@ -1,10 +1,13 @@
 const express = require('express')
 
+
 const app = express()
 const db = require('./utils/database')
 const port = require('../config').api.port
 
 const userRouter = require('./users/users.router')
+const authRouter = require('./auth/auth.router')
+const passport = require('passport')
 
 db.authenticate()
     .then(() => console.log('Database Authenticated'))
@@ -21,7 +24,9 @@ app.get('/',  (req, res) => {
 })
 
 app.use('/api/v1/users', userRouter)
+app.use('/api/v1/auth', authRouter)
 
 app.listen(port, () => {
     console.log(`Server started at port ${port}`)
 })
+
